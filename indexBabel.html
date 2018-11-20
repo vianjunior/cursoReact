@@ -1,0 +1,68 @@
+<!Doctype HTML>
+<html>
+
+<header>
+    <title>React</title>
+</header>
+
+<body>
+
+    <div id="root"></div>
+
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script> <!--importação React-->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> <!--importação Babel-->
+
+    <!-- Sintaxe JSX. Asemelha-se ao HTML -->
+    <script type="text/babel">
+
+        // function MyComponent() {
+        //     return <p>Meu Componente</p>
+        // }
+
+        class MyComponent extends React.Component {
+            state = {
+                counter : 0
+            }
+
+            handleClick = () => {
+                // this.setState({
+                //     counter : this.state.counter + 1
+                // }) Esta foi a maneira que eu fiz
+                this.setState(prevState => ({
+                        counter: prevState.counter + 1
+                })) // e Esta é a maneira mais correta a se fazer, pois o prevState sempre estará com valor atualizado
+                this.setState(prevState => ({
+                        counter: prevState.counter + 1
+                })) // Por este motivo. Desta maneira, irá incrementar sempre todas as repetições, uma vez que o valor está atualizado
+            
+            }
+
+            limparContador = () => {
+                this.setState({
+                    counter : 0
+                })
+            }
+            render(){
+                return (
+                    <div>
+                        <p>Contador = {this.state.counter}</p>
+                        <button onClick = {this.handleClick}>
+                            Incrementar
+                        </button>
+                        <button onClick = {this.limparContador}>
+                            Limpar
+                        </button>
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(
+            <MyComponent />,
+            document.getElementById("root")
+        );
+    </script>
+</body>
+
+</html>

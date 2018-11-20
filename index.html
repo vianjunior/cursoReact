@@ -1,0 +1,44 @@
+<!Doctype HTML>
+<html>
+
+<header>
+    <title>React</title>
+</header>
+
+<body>
+
+    <div id="root"></div>
+    <div id="root2"></div>
+
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script> <!--importação React-->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script> <!--importação Babel-->
+
+    <script> // Se não definimos o tipo do Script, ele automaticamente assume o tipo JavaScript.
+
+        var e = React.createElement // estou definindo que a variável vai receber React.createElement
+
+        ReactDOM.render(
+            // e aqui vou usar a variável como se fosse o React.createElement
+            e("h1", null, "Hello World, Hello React!",
+                e("br"),
+                e("small", { style: { color: 'blue' } }, "by Junior Vian")
+            ),
+            document.getElementById("root")
+        )
+    </script>
+
+    <!-- Sintaxe JSX. Asemelha-se ao HTML -->
+    <script type="text/babel"> // Aqui criamos uma tag script e definimos o seu tipo como Babel
+        ReactDOM.render(
+            <h1>
+                Hello World, Hello React, Hello Babel!
+                <br/>
+                <small style = {{color : 'blue'}}>by Junior Vian</small>
+            </h1>,
+            document.getElementById("root2")
+        );
+    </script>
+</body>
+
+</html>
