@@ -25,7 +25,7 @@
                 counter : 0
             }
 
-            handleClick = () => {
+            manipulaIncrementar = () => {
                 // this.setState({
                 //     counter : this.state.counter + 1
                 // }) Esta foi a maneira que eu fiz
@@ -40,21 +40,46 @@
 
             limparContador = () => {
                 this.setState({
-                    counter : 0
+                    counter : 0,
+                    message : '' 
                 })
+            }
+
+            // esta função irá mudar o estado da variável message para o valor do campo onde estiver o foco
+            manipulaMessage = (event) => {
+                this.setState({
+                    message: event.target.value
+                })
+
             }
             render(){
                 return (
                     <div>
                         <p>Contador = {this.state.counter}</p>
-                        <button onClick = {this.handleClick}>
+                        <button onClick = {this.manipulaIncrementar}>
                             Incrementar
                         </button>
                         <button onClick = {this.limparContador}>
                             Limpar
                         </button>
-                    </div>
-                )
+                        <hr />
+                        <div>
+                            <input 
+                                type="text"
+                                value={this.state.message} //Os dois inputs recebem o valor do outro
+                                onChange={this.manipulaMessage} //chama a função ao digitar algo no campo
+                            />
+
+                            <input 
+                                type="text"
+                                value={this.state.message} //Os dois inputs recebem o valor do outro
+                                onChange={this.manipulaMessage}
+                            />
+
+                            <p>{this.state.message}</p> 
+                        </div>  
+                    </div> 
+                ) 
             }
         }
 
