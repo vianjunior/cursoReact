@@ -41,14 +41,17 @@
             limparContador = () => {
                 this.setState({
                     counter : 0,
-                    message : '' 
+                    // só vamos aproveitar o state daqui
+                    message : '', 
+                    name : '',
+                    lastName: ''
                 })
             }
 
             // esta função irá mudar o estado da variável message para o valor do campo onde estiver o foco
-            manipulaMessage = (event) => {
+            manipulaMessage = (key, value) => {
                 this.setState({
-                    message: event.target.value
+                    [key] : value
                 })
 
             }
@@ -66,17 +69,32 @@
                         <div>
                             <input 
                                 type="text"
-                                value={this.state.message} //Os dois inputs recebem o valor do outro
-                                onChange={this.manipulaMessage} //chama a função ao digitar algo no campo
+                                value={this.state.name} //Os dois inputs recebem o valor do outro
+                                onChange={(event) => {
+                                    this.manipulaMessage("name", event.target.value)
+                                }} //chama a função ao digitar algo no campo
                             />
 
                             <input 
                                 type="text"
-                                value={this.state.message} //Os dois inputs recebem o valor do outro
-                                onChange={this.manipulaMessage}
+                                value={this.state.lastName} //Os dois inputs recebem o valor do outro
+                                onChange={(event) => {
+                                    this.manipulaMessage("lastName", event.target.value)
+                                }}
                             />
 
-                            <p>{this.state.message}</p> 
+                            <p>{this.state.name} {this.state.lastName}</p> 
+
+                            <button 
+                                onClick={()=>
+                                    this.setState({
+                                        name : 'Junior',
+                                        lastName : 'Vian'
+                                    })
+                                }
+                            >
+                                Aluno
+                            </button>
                         </div>  
                     </div> 
                 ) 
