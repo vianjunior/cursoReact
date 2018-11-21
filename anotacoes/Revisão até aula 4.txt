@@ -1,0 +1,110 @@
+Revisão
+Seção 1, aula 5
+Elementos
+
+
+Um elemento React (React element) descreve o que você na tela:
+
+const element = React.createElement("h1", null, "Olá mundo!");
+
+O mesmo pode ser feito usando JSX através do Babel:
+
+const element = <h1>Olá mundo!</h1>;
+
+
+
+Componentes
+
+
+Um componente React (React component) permite dividir a interface do usuário em unidades independentes e reutilizáveis, e nos permite tratar cada parte de forma isolada. Todo componente recebe entradas arbitrárias, chamadas "props", e retornam elementos descrevendo o que deve aparecer na tela.
+
+A forma mais simples de escrever um componente é como função:
+
+function MyComponent(props) {
+  return <h1>{props.title}</h1>;
+}
+A função acima é um componente React válido, pois aceita um parâmetro "props", que nada mais é que um objeto com quaisquer propriedades, e retorna um elemento React. Nós chamamos estes componentes como funcional (Functional Component) porque são literalmente funções JavaScript.
+
+Outra forma de escrever o componente é através de classe:
+
+class MyComponent extends React.Component {
+  render() {
+    return <h1>{this.props.title}</h1>;
+  }
+}
+O componente como classe tem as seguintes características:
+
+Precisa herdar de React.Component;
+
+Deve conter o método render() que retorna elementos React;
+
+As propriedades são acessadas através de this.props;
+
+Componente como classe possui funcionalidades adicionais como estado (state) e métodos do clico de vida (lifecycle) do componente. Veremos em detalhe esses métodos a frente no curso.
+
+Convenciona-se que o nome do componente comece com a primeira letra em maiúsculo, seja como função ou classe.
+
+
+
+Estado
+
+
+Para tornar a interface de usuário (UI - user interface) interativa é preciso fazer mudanças que acompanham as alterações do modelo de dados (data model). O React torna isso fácil através do estado (state).
+
+Para adicionar um estado ao componente devemos iniciá-lo na construção do mesmo:
+
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { counter: 0 };
+  }
+ 
+  render() {
+    return <h1>Contador: {this.state.counter}</h1>;
+  }
+}
+Ou podemos escrever usando a sintaxe fornecida pelo babel-plugin-transform-class-properties:
+
+class MyComponent extends React.Component {
+  state = { counter: 0 };
+ 
+  render() {
+    return <h1>Contador: {this.state.counter}</h1>;
+  }
+}
+Componentes funcionais não possuem estado, são stateless.
+
+O estado pode ser acessado no render() diretamente através do this.state.
+
+Quando queremos fazer uma alteração no estado, devemos sempre usar o método setState():
+
+class MyComponent extends React.Component {
+  state = { counter: 0 };
+ 
+  render() {
+    return (
+      <div>
+        <h1>Contador: {this.state.counter}</h1>
+        <button
+          onClick={() => { this.setState({ counter: 1 }); }}
+        >
+          Contar
+        </button>
+      </div>
+    );
+  }
+}
+Caso seja necessário acessar o estado anterior ao definir o novo, devemos utilizar uma função como parâmetro do setState():
+
+this.setState(function (prevState) {
+  return { counter: prevState.counter + 1 };
+});
+Ao alterar o estado através do setState(), o React invoca novamente o método render() para atualizar a construção dos elementos com o valor do novo estado. Esse processo é chamado de re-renderização (re-rendering).  Re-renderizar a cada mudança faz tudo se tornar mais simples, sem mais operações explícitas no DOM, tudo é declarativo.
+
+O método render() sempre retorna uma versão estática dos elementos, assim fica fácil ver como a interface do usuário é atualizada e onde a alteração é feita pois nada complicado é feito. Essa atualização de tela sincronizada com o modelo de dados é chamada de data binding, e este jeito que o React faz é chamado de one-way data flow, ou one-way binding, pois a atualização segue sempre um único sentido.
+
+E como alterar o DOM é uma operação lenta, o React processa as mudanças no Virtual DOM (VDOM), que é uma representação do DOM em memória, e só depois reflete no DOM real. O virtual DOM torna a re-renderização super rápida.
+
+Como Virtual DOM é mais um padrão do que uma tecnologia específica, as pessoas às vezes dizem que significam coisas diferentes. No mundo React, o termo Virtual DOM geralmente é associado aos elementos React, pois são os objetos que representam a interface do usuário. React, no entanto, também usa objetos internos chamados “fibras” (fibers) para armazenar informações adicionais sobre a árvore de componentes. Eles também podem ser considerados parte da implementação do Virtual DOM no React.
+
+O processo de atualização do DOM através do Virutal DOM é chamado de reconciliação (reconciliation). O React Fiber é o novo mecanismo de reconciliação no React 16.
